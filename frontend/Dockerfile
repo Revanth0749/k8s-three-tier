@@ -1,16 +1,19 @@
-#Stage1: Build the React app
+# Stage 1: Build the React app
 FROM node:18-alpine AS builder
 
 WORKDIR /app
 
-COPY package*.json ./
+COPY frontend/package*.json ./
 RUN npm install
 
-COPY . .
+COPY frontend/ ./
+
 RUN npm run build
 
-#Stage2: Server the application with Apache WebServer(httpd)
+# Stage 2: Serve app with Apache web server
 FROM httpd:2.4-alpine
+
+RUN rm -rf /usr/local/apache2/htdocs/*
 
 COPY --from=builder /app/build/ /usr/local/apache2/htdocs/
 
