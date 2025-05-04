@@ -8,18 +8,22 @@ jobs:
     runs-on: ubuntu-latest
 
     steps:
-      - name: CheckOut Source code
-        uses: actions/checkout@v3
-      
-      - name: Login to Azure
-        uses: azure/login@v1
-        with:
-          creds: ${{ secrets.AZURE_CREDENTIALS }}
+    - name: CheckOut Source code
+      uses: actions/checkout@v3
+    
+    - name: Login to Azure
+      uses: azure/login@v1
+      with:
+        creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: Login to ACR
-        run: |
-          az acr login --name akspractice49
-      
-      - name: Build docker image
-        run: |
-          docker build -t akspractice49.azurecr.io/frontend:0.0.1 ./frontend
+    - name: Login to ACR
+      run: |
+        az acr login --name akspractice49
+    
+    - name: Build Docker image
+      run: |
+        docker build -t akspractice49.azurecr.io/frontend:0.0.1 ./frontend
+
+    - name: Push image to ACR
+      run: |
+        docker push akspractice49.azurecr.io/frontend:0.0.1
