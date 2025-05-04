@@ -7,7 +7,7 @@ COPY package*.json ./
 RUN npm install
 
 COPY . .
-RUN npm build
+RUN npm run build
 
 #Stage2: Server the application with Apache WebServer(httpd)
 FROM httpd:2.4-alpine
