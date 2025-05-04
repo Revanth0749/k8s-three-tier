@@ -1,7 +1,7 @@
 name: Build and Push image to ACR
 
 on:
-  wokrflow_dispatch:
+  workflow_dispatch:
 
 jobs:
   build-and-push:
