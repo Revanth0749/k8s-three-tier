@@ -10,31 +10,26 @@ jobs:
     steps:
       - name: CheckOut Source Code
         uses: actions/checkout@v4
+
       - name: Login to Azure
         uses: azure/login@v1
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Set AKS Context
         uses: azure/aks-set-context@v3
         with:
           resource-group: Containers-RG
           cluster-name: aks-practice
+
       - name: Install Helm
         uses: azure/setup-helm@v3
         with:
           version: v3.11.1
+
       - name: Frontend Deployment using Helm
         run: |
           helm upgrade --install uiapp ./frontend/charts/frontend \
           --namespace frontend \
           --create-namespace \
-          --set image.repository=akspractice49.azurecr.io/frontend \
-          --set image.tag=0.0.1 \
-          --set service.type=ClusterIP \
-          --set service.port=80 \
-          --set ingress.enabled=true \
-          --set ingress.className=nginx \
-          --set ingress.hosts[0].host=chart-example.local \
-          --set ingress.hosts[0].paths[0].path=/ \
-          --set ingress.hosts[0].paths[0].pathType=ImplementationSpecific
-      
+          --values ./frontend/charts/frontend/values.yaml
