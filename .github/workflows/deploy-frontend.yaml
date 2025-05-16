@@ -31,5 +31,10 @@ jobs:
           --set image.repository=akspractice49.azurecr.io/frontend \
           --set image.tag=0.0.1 \
           --set service.type=ClusterIP \
-          --set service.port=80
+          --set service.port=80 \
+          --set ingress.enabled=true \
+          --set ingress.className=nginx \
+          --set ingress.hosts[0].host=chart-example.local \
+          --set ingress.hosts[0].paths[0].path=/ \
+          --set ingress.hosts[0].paths[0].path=/ \
       
